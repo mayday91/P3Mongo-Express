@@ -43,4 +43,4 @@
 | PATCH   | `/songs/:id`           | `update route`         |
 | DELETE  | `/songs/:id`           | `delete route`         |
 
-![](./wireframes/ERD Diagram.png)
+![ERD](images/ERD/IMG_3141.jpg)
