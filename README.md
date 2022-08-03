@@ -1,5 +1,3 @@
-DropoutTunes is a e-commerce website to search and purchase music.
-Login and save songs to your cart then checkout.
 
 ## FRONT-END
 
@@ -38,12 +36,12 @@ Login and save songs to your cart then checkout.
 
 ## Wireframes
 
-![Home](./public/assets/images/Index%20Page.png)
-![Search](./public/assets/images/Search%20Page%20Logged%20In.png)
-![Login](./public/assets/images/Login.png)
-![Show](./public/assets/images/Show%20Page.png)
-![Cart](./public/assets/images/Cart.png)
-![Logout](./public/assets/images/logout.png)
+![Home](public/images/IndexPage.png)
+![Search](public/images/SearchPageLoggedIn.png)
+![Login](public/images/Login.png)
+![Show](public/images/ShowPage.png)
+![Cart](public/images/Cart.png)
+![Logout](public/images/logout.png)
 
 
 
@@ -65,7 +63,7 @@ Login and save songs to your cart then checkout.
  - passport - Passport is authentication middleware for Node. js. 
  - passport-http-bearer - HTTP Bearer authentication strategy for Passport. 
  - GitHub - an online collaborative platform to share ideas and methods.
- - lastFM API - an API to fetch music data.
+ - lastFM API - an API to fetch music data (example endpoint from a search - https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=dmx&api_key=b6d97def09e924303dab1c829302163b&format=json&limit=30)
 
 ## User Routes
 
@@ -92,4 +90,11 @@ Login and save songs to your cart then checkout.
 
 ## ERD
 
-![ERD](./public/assets/images/ERD/IMG_3141.jpg)
+![ERD](public/ERD/ERD.png)
+
+## Roles
+Randy D'Abbraccio & Gonzalo Quiroqa - Frontend Client
+Lance Nguyen - Backend API
+Ryan May - Team Manager
+=======
+ 
