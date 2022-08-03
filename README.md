@@ -90,14 +90,11 @@
 
 ## ERD
 
-<<<<<<< HEAD
-![ERD](./public/assets/images/ERD/IMG_3141.jpg)
-60fda5238b3b2038e7e45bb053fbc92b7683a3f7
+![ERD](public/ERD/ERD.png)
 
 ## Roles
 Randy D'Abbraccio & Gonzalo Quiroqa - Frontend Client
 Lance Nguyen - Backend API
 Ryan May - Team Manager
 =======
-![ERD](/images/ERD/IMG_3141.jpg)
  
