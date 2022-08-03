@@ -1,6 +1,3 @@
-=======
-DropoutTunes is a e-commerce website to search and purchase music.
-Login and save songs to your cart then checkout.
 
 ## FRONT-END
 
@@ -66,7 +63,11 @@ Login and save songs to your cart then checkout.
  - passport - Passport is authentication middleware for Node. js. 
  - passport-http-bearer - HTTP Bearer authentication strategy for Passport. 
  - GitHub - an online collaborative platform to share ideas and methods.
+<<<<<<< HEAD
  - lastFM API - an API to fetch music data (example endpoint from a search - https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=dmx&api_key=b6d97def09e924303dab1c829302163b&format=json&limit=30)
+=======
+ - lastFM API - an API to fetch music data.
+>>>>>>> 5668cf1285670ec8da5b6326b0aeac8649161411
 
 ## User Routes
 
@@ -93,10 +94,14 @@ Login and save songs to your cart then checkout.
 
 ## ERD
 
+<<<<<<< HEAD
 ![ERD](./public/assets/images/ERD/IMG_3141.jpg)
 60fda5238b3b2038e7e45bb053fbc92b7683a3f7
 
 ## Roles
-Randy D'Abbraccio & Gonzalo Quiroqa - frontend client
-Lance Nguyen - backend API
+Randy D'Abbraccio & Gonzalo Quiroqa - Frontend Client
+Lance Nguyen - Backend API
 Ryan May - Team Manager
+=======
+![ERD](/images/ERD/IMG_3141.jpg)
+ 
