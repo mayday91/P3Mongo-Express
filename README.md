@@ -2,6 +2,24 @@
 
 ## Backend-API
 
+## Approach to project(backend)
+ - Will be using lastFM API to fetch data that will be relevant to display on the client side of the app. 
+
+## Technologies used
+ - Postman - 
+ - bcrypt
+ - cors
+ - dotenv
+ - express
+ - jsonwebtoken
+ - method-override
+ - mongodb
+ - mongoose
+ - passport
+ - passport-http-bearer
+ - GitHub
+ - lastFM API
+
 ## User Routes
 
 ### User route table
@@ -24,3 +42,4 @@
 | POST    | `/songs`               | `create route`         |
 | PATCH   | `/songs/:id`           | `update route`         |
 | DELETE  | `/songs/:id`           | `delete route`         |
+
