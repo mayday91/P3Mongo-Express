@@ -63,11 +63,7 @@
  - passport - Passport is authentication middleware for Node. js. 
  - passport-http-bearer - HTTP Bearer authentication strategy for Passport. 
  - GitHub - an online collaborative platform to share ideas and methods.
-<<<<<<< HEAD
  - lastFM API - an API to fetch music data (example endpoint from a search - https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=dmx&api_key=b6d97def09e924303dab1c829302163b&format=json&limit=30)
-=======
- - lastFM API - an API to fetch music data.
->>>>>>> 5668cf1285670ec8da5b6326b0aeac8649161411
 
 ## User Routes
 
