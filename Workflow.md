@@ -6,4 +6,5 @@
 - SME: Subject Matter Expert (Front End & Back End)
 - Front End SME: team goes to for React questions
 - Back End SME: team goes to for Express/MongoDB questions
-- Kanban Board: place to organize tickets (Backlog, in progress, peer review, in test, done, blocked; each of these have a 'fast track' space at end of column/row for imminent issues)
+- Kanban Board: place to organize tickets (Backlog, in progress, peer review, in test, done, blocked; each of these have a 'fast track' space at end of column/row for imminent issues)   
+
