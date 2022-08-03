@@ -95,3 +95,8 @@ Login and save songs to your cart then checkout.
 
 ![ERD](./public/assets/images/ERD/IMG_3141.jpg)
 60fda5238b3b2038e7e45bb053fbc92b7683a3f7
+
+## Roles
+Randy D'Abbraccio & Gonzalo Quiroqa - frontend client
+Lance Nguyen - backend API
+Ryan May - Team Manager
