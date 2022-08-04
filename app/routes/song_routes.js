@@ -1,20 +1,24 @@
 // Express docs: http://expressjs.com/en/api.html
 const express = require('express')
+
+// dotenv
+require("dotenv").config()
+
 // Passport docs: http://www.passportjs.org/docs/
 const passport = require('passport')
 
-// const {apiKey} = require("../../.env")
-const apiKey = "d8e8bce9ba4ee2c4e9813f3ccb16ed83"
+const apiKey = require("../../.env")
+// const apiKey = "d8e8bce9ba4ee2c4e9813f3ccb16ed83"
+
+// import getLastFmSong
+const apiF = require('../api/songsFm') 
 
 // pull in Mongoose model for songs
-
 // song model
 const Song = require('../models/song')
 
 // require axios
 const axios = require("axios")
-
-// const getLastFmSong = require("../api/lastFm") 
 
 // this is a collection of methods that help us detect situations when we need
 // to throw a custom error
@@ -38,38 +42,19 @@ const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
 
-const getLastFmSong = (searchTerm, apiKey) => {
-	return axios({
-		method: "GET",
-		url: `https://ws.audioscrobbler.com/2.0/?method=track.search&track=${searchTerm}&api_key=${apiKey}&format=json&limit=30`,
-		// data: {}
-		})
-
-		// https://ws.audioscrobbler.com/2.0/?method=track.search&track=anthem&api_key=d8e8bce9ba4ee2c4e9813f3ccb16ed83&format=json&limit=30
-
-	// console.log(data.data.results.trackmatches)
-
-
-    // return axios({
-    //     method: "GET",
-    //     url: "https://ws.audioscrobbler.com/2.0/?method=track.search&track=anthem&api_key=d8e8bce9ba4ee2c4e9813f3ccb16ed83&format=json&limit=30"
-    // })
-}
-// getLastFmSong()
-
-
 
 // SINGLE SONG SEARCH
 router.get("/songs", (req, res, next) => {
 	const searchTerm = req.body.searchTerm
 	console.log(searchTerm)
-	console.log(apiKey)
+	console.log("here is the key!", process.env.apiKey)
 	// getLastFmSong()
-	// 	.then((res) => console.log(res))
-		getLastFmSong(searchTerm, apiKey)
+	// .then((res) => console.log(res))
+		apiF.getLastFmSong(searchTerm, process.env.apiKey)
 			.then((res) => {
 				console.log("IN GET SONG AFTER GETFM")
 				console.log(res.data)
+				console.log(res.data.results.trackmatches)
 				return res.data
 			})
 			.then((resData) => {
@@ -77,16 +62,6 @@ router.get("/songs", (req, res, next) => {
 			})
 			.catch(err => console.log(err))
 })
-
-// let getLastFmSong = async () => {
-// 	let data = await axios.get(`https://ws.audioscrobbler.com/2.0/?method=track.search&track=anthem&api_key=d8e8bce9ba4ee2c4e9813f3ccb16ed83&format=json&limit=30`);
-// 	return data;
-// };
-// module.exports = async (req, res) => {
-// 	let dataFact = await getFacts();
-// 	res.send(dataFact.data.fact)
-// };
-
 
 
 // INDEX
