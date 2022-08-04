@@ -27,6 +27,7 @@ const requireToken = passport.authenticate('bearer', { session: false })
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
+
 // INDEX
 // GET /examples
 router.get('/examples', requireToken, (req, res, next) => {
@@ -42,6 +43,7 @@ router.get('/examples', requireToken, (req, res, next) => {
 		// if an error occurs, pass it to the handler
 		.catch(next)
 })
+
 
 // SHOW
 // GET /examples/5a7db6c74d55bc51bdf39793
