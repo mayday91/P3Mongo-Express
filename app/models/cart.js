@@ -3,19 +3,16 @@ const mongoose = require('mongoose')
 const { Schema, model } = mongoose
 
 const cartSchema = new Schema({
-  trackName: {
-    type: [String],
-    required: true
-  },
+  songs: [], //we can make songs a subdocument by importing the model schema into this array
+  // or we can leave them as separate docs by using object id reference (based on MongoDB id when we make the song)
   price: {
     type: Number,
     default: 1
   },
-  user: {
-    type: String,
-    required: true
-  }
-},{
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   totalPrice: {
     type: Number
   },

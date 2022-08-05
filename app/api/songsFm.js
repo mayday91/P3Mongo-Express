@@ -9,7 +9,7 @@ const getLastFmSong = (searchTerm, apiKey) => {
 		// data: {}
 		})
 }
-module.exports =  getLastFmSong
+module.exports =  {getLastFmSong}
 
 
 

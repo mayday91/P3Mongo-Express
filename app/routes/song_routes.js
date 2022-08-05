@@ -16,6 +16,7 @@ const apiF = require('../api/songsFm')
 // pull in Mongoose model for songs
 // song model
 const Song = require('../models/song')
+// const Cart = require("../models/cart")
 
 // require axios
 const axios = require("axios")
@@ -44,6 +45,7 @@ const router = express.Router()
 
 
 // SINGLE SONG SEARCH
+// Q for a related title
 router.get("/songs", (req, res, next) => {
 	const searchTerm = req.body.searchTerm
 	console.log(searchTerm)
@@ -62,6 +64,22 @@ router.get("/songs", (req, res, next) => {
 			})
 			.catch(err => console.log(err))
 })
+
+
+// // ADD TO CART ROUTE
+// // 
+// router.post("/addToCart", (req, res, next) => {
+// 	const user = req.data.user_id
+// 	const song = req.data.mbid
+// 	const cart = req.body
+// 		Cart.create(user, song, cart)
+// 			.then((res) => {
+// 			return cart.updateOne(req.body.cart)
+// 			})
+// 			.catch(err => console.log(err))
+
+// })
+
 
 
 // INDEX
