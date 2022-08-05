@@ -16,7 +16,7 @@ const apiF = require('../api/songsFm')
 // pull in Mongoose model for songs
 // song model
 const Song = require('../models/song')
-// const Cart = require("../models/cart")
+const Cart = require("../models/cart")
 
 // require axios
 const axios = require("axios")
@@ -34,6 +34,7 @@ const requireOwnership = customErrors.requireOwnership
 // this is middleware that will remove blank fields from `req.body`, e.g.
 // { example: { title: '', text: 'foo' } } -> { example: { text: 'foo' } }
 const removeBlanks = require('../../lib/remove_blank_fields')
+const cart = require('../models/cart')
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
 // it will also set `req.user`
@@ -46,7 +47,7 @@ const router = express.Router()
 
 // SINGLE SONG SEARCH
 // Q for a related title
-router.get("/songs", (req, res, next) => {
+router.get("/songs/:searchTerm", (req, res, next) => {
 	const searchTerm = req.body.searchTerm
 	console.log(searchTerm)
 	console.log("here is the key!", process.env.apiKey)
@@ -58,27 +59,51 @@ router.get("/songs", (req, res, next) => {
 				console.log(res.data)
 				console.log(res.data.results.trackmatches)
 				return res.data
+			
 			})
 			.then((resData) => {
-				res.status(201).json({fmData: resData})
+				 res.status(201).json({fmData: resData})
 			})
 			.catch(err => console.log(err))
 })
 
 
-// // ADD TO CART ROUTE
-// // 
-// router.post("/addToCart", (req, res, next) => {
-// 	const user = req.data.user_id
-// 	const song = req.data.mbid
-// 	const cart = req.body
-// 		Cart.create(user, song, cart)
-// 			.then((res) => {
-// 			return cart.updateOne(req.body.cart)
-// 			})
-// 			.catch(err => console.log(err))
+// ADD TO CART ROUTE
+// 
+router.post("/addToCart", (req, res, next) => {
+	const user = req.data.user.id
+	const songId = req.data.mbid
+	const price = 1
+	const total = 1
+	const totalPrice = price * total
+	orderActive = true
+	if (Cart.find(user) === "") {
+		Cart.create({
 
-// })
+			trackName: songId,
+			price: price,
+			totalPrice: totalPrice,
+			orderActive: true
+		})
+	} else (Cart.find({
+
+		trackName: songId,
+		price: price,
+		totalPrice: totalPrice,
+		orderActive: true
+	}))
+		Cart.create({
+
+			trackName: songId,
+			price: price,
+			totalPrice: totalPrice,
+			orderActive: true
+		})
+			.then((res) => {
+			return Cart.updateOne(req.body.cart)
+			})
+			.catch(err => console.log(err))
+})
 
 
 
