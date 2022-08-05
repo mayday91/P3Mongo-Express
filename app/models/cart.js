@@ -1,21 +1,22 @@
 // import dependencies
 const mongoose = require('mongoose')
+
 const { Schema, model } = mongoose
+const songSchema = require("./song")
 
 const cartSchema = new Schema({
-  trackName: {
-    type: [String],
-    required: true
-  },
+  songs: [songSchema],
+  // we can make songs a subdoc by importing the model schema into this array
+
   price: {
     type: Number,
     default: 1
   },
-  user: {
-    type: String,
-    required: true
-  }
-},{
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+
   totalPrice: {
     type: Number
   },
@@ -24,6 +25,10 @@ const cartSchema = new Schema({
     default: true,
     required: true
   }
+}, 
+{
+  timestamps: true
+
 })
 
 

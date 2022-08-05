@@ -3,7 +3,6 @@
 
 const mongoose = require('mongoose')
 
-// const songSchema = require("./song")
 
 const { Schema, model } = mongoose
 
@@ -19,13 +18,9 @@ const songSchema = new Schema(
         image: {
             type: String
         },
-        // listeners: {
-        //     type: Number
-        // },
         mbid: {
             type: String
         },
-        // toys: [toySchema],
         owner: {
 			type: Schema.Types.ObjectId,
 			ref: 'User'
@@ -38,7 +33,7 @@ const songSchema = new Schema(
     }
 )
 
-module.exports = model('Song', songSchema)
+module.exports = songSchema
 
 // // virtuals go here
 // // these are virtual properties, that use existing data(saved in the database), to add a property whenever we retieve a document and convert it to JSON or an object.
