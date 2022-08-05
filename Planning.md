@@ -1,0 +1,6 @@
+From the main page a user can search for a song, log in or create a new account. The nav links that will be displayed on this page are only Home and Log In/Sign Up(if not logged in) or Home, Settings, Logout, and Cart with the number of items it has listed next to it. A user can't add to a shopping cart without logging in and the settings are to change password. 
+Below the Navbar will be a search bar to allow users to search for individual songs with an image below it to cover the blank space on the page. When the search results load the image will hide and the results will populate below the search bar displaying the track name and artist of each result with a + next to it for the user to add to cart.
+On the bottom of those pages will be a footer with our logo and the purpose of the page they are currently on ex.(Search page, Track Info, Logout, Cart)
+The login and signup buttons could open modals so it doesnt ever leave the main page??
+The shopping cart's (active and closed) could also be a modal possibly that we rotate through each cart with??
+It would keep everything on one page so only one route.
