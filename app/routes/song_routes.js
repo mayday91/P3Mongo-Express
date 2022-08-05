@@ -46,7 +46,7 @@ const router = express.Router()
 
 // SINGLE SONG SEARCH
 // Q for a related title
-router.get("/songs", (req, res, next) => {
+router.get("/songs/:searchTerm", (req, res, next) => {
 	const searchTerm = req.body.searchTerm
 	console.log(searchTerm)
 	console.log("here is the key!", process.env.apiKey)
@@ -58,9 +58,10 @@ router.get("/songs", (req, res, next) => {
 				console.log(res.data)
 				console.log(res.data.results.trackmatches)
 				return res.data
+			
 			})
 			.then((resData) => {
-				res.status(201).json({fmData: resData})
+				 res.status(201).json({fmData: resData})
 			})
 			.catch(err => console.log(err))
 })
