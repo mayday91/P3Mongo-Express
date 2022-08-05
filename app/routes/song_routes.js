@@ -47,6 +47,10 @@ const router = express.Router()
 
 // SINGLE SONG SEARCH
 // Q for a related title
+// if we want our searchTerm to come from body, we must do a few things
+// A - must coordinate with front end team about the details of the request url and body
+// B - remove searchTerm parameter from url
+// C - change definition of searchTerm to be derived from req.body.searchTerm?
 router.get("/songs/:searchTerm", (req, res, next) => {
 	const searchTerm = req.params.searchTerm
 	console.log(searchTerm)
@@ -68,128 +72,108 @@ router.get("/songs/:searchTerm", (req, res, next) => {
 })
 
 
-// ADD TO CART ROUTE
-// 
-router.post("/addToCart", (req, res, next) => {
-	const user = req.data.user.id
-	const songId = req.data.mbid
-	const price = 1
-	const total = 1
-	const totalPrice = price * total
-	orderActive = true
-	if (Cart.find(user) === "") {
-		Cart.create({
+// CREATE A CART ROUTE
+// CREATE A CART FOR THE USER WHEN THEY LOGGED IN
+// requireToken
+router.post("/carts", requireToken, (req, res, next) => {
+	// create a const for id first?
+    req.body.owner = req.user.Id
 
-			trackName: songId,
-			price: price,
-			totalPrice: totalPrice,
-			orderActive: true
-		})
-	} else (Cart.find({
-
-		trackName: songId,
-		price: price,
-		totalPrice: totalPrice,
-		orderActive: true
-	}))
-		Cart.create({
-
-			trackName: songId,
-			price: price,
-			totalPrice: totalPrice,
-			orderActive: true
-		})
-			.then((res) => {
-			return Cart.updateOne(req.body.cart)
-			})
-			.catch(err => console.log(err))
+    Cart.create(req.body)
+        .then(cart => {
+            console.log(cart)
+			res.status(201).json({cart})
+            
+        })
+        .catch(err => {
+            res.json(err)
+        })
 })
 
 
+// // UPDATE ADD/REMOVE SONG FROM CART
+// // FULL CRUD WILL BE CARRIED OUT HERE
+// router.patch("/cart/:id", requireToken, removeBlanks, (req, res, next) => {
+// 	delete req.body.cart.owner
 
-// INDEX
-// GET /songs
-router.get('/songs', requireToken, (req, res, next) => {
-	Song.find()
-		.then((songs) => {
-			// `songs` will be an array of Mongoose documents
-			// we want to convert each one to a POJO, so we use `.map` to
-			// apply `.toObject` to each one
-			return songs.map((song) => song.toObject())
-		})
-		// respond with status 200 and JSON of the songs
-		.then((songs) => res.status(200).json({ songs: songs }))
-		// if an error occurs, pass it to the handler
-		.catch(next)
-})
+// 	Cart.findById(req.params.id)
+// 		//hanlde 404 errors
+// 		.then(handle404)
+// 		.then((cart) => {
+// 			// require ownership of the cart before updating
+// 			requireOwnership(req, cart)
+// 			// pass along the update to the next .then
+// 			return cart.updateOne(req.body.cart)
+// 		})
+// 		// no content, but successful update
+// 		.then(() => res.sendStatus(204))
+// 		.catch(next)
+// })
 
-// SHOW
-// GET /songs/5a7db6c74d55bc51bdf39793
-router.get('/songs/:id', requireToken, (req, res, next) => {
-	// req.params.id will be set based on the `:id` in the route
-	Song.findById(req.params.id)
-		.then(handle404)
-		// if `findById` is succesful, respond with 200 and "song" JSON
-		.then((song) => res.status(200).json({ song: song.toObject() }))
-		// if an error occurs, pass it to the handler
-		.catch(next)
-})
 
-// CREATE
-// POST /songs
-router.post('/songs', requireToken, (req, res, next) => {
-	// set owner of new song to be current user
-	req.body.song.owner = req.user.id
+// // DELETE CART ROUTE
+// router.delete("/carts/:id", requireToken, (req, res, next) => {
 
-	Song.create(req.body.song)
-		// respond to succesful `create` with status 201 and JSON of new "song"
-		.then((song) => {
-			res.status(201).json({ song: song.toObject() })
-		})
-		// if an error occurs, pass it off to our error handler
-		// the error handler needs the error message and the `res` object so that it
-		// can send an error message back to the client
-		.catch(next)
-})
+// 	Cart.findById(req.params.id)
+// 	// handle 404
+// 	.then(handle404)
+// 	.then((cart) => {
+// 		requireOwnership(req, res)
+// 		cart.deleteOne()
+// 	})
+// 	// send status since this will be no content
+// 	.then(() => res.sendStatus(204))
+// 	.catch(next)
+// })
 
-// UPDATE
-// PATCH /songs/5a7db6c74d55bc51bdf39793
-router.patch('/songs/:id', requireToken, removeBlanks, (req, res, next) => {
-	// if the client attempts to change the `owner` property by including a new
-	// owner, prevent that by deleting that key/value pair
-	delete req.body.song.owner
 
-	Song.findById(req.params.id)
-		.then(handle404)
-		.then((song) => {
-			// pass the `req` object and the Mongoose record to `requireOwnership`
-			// it will throw an error if the current user isn't the owner
-			requireOwnership(req, song)
 
-			// pass the result of Mongoose's `.update` to the next `.then`
-			return song.updateOne(req.body.song)
-		})
-		// if that succeeded, return 204 and no JSON
-		.then(() => res.sendStatus(204))
-		// if an error occurs, pass it to the handler
-		.catch(next)
-})
 
-// DESTROY
-// DELETE /songs/5a7db6c74d55bc51bdf39793
-router.delete('/songs/:id', requireToken, (req, res, next) => {
-	Song.findById(req.params.id)
-		.then(handle404)
-		.then((song) => {
-			// throw an error if current user doesn't own `song`
-			requireOwnership(req, song)
-			// delete the song ONLY IF the above didn't throw
-			song.deleteOne()
-		})
-		// send back 204 and no content if the deletion succeeded
-		.then(() => res.sendStatus(204))
-		// if an error occurs, pass it to the handler
-		.catch(next)
-})
+
+// SHOW CART ROUTE?
+
+
+
+
+
+// // ADD TO CART ROUTE
+// // 
+// router.post("/addToCart", (req, res, next) => {
+// 	const user = req.data.user.id
+// 	const songId = req.data.mbid
+// 	const price = 1
+// 	const total = 1
+// 	const totalPrice = price * total
+// 	orderActive = true
+// 	if (Cart.find(user) === "") {
+// 		Cart.create({
+
+// 			trackName: songId,
+// 			price: price,
+// 			totalPrice: totalPrice,
+// 			orderActive: true
+// 		})
+// 	} else (Cart.find({
+
+// 		trackName: songId,
+// 		price: price,
+// 		totalPrice: totalPrice,
+// 		orderActive: true
+// 	}))
+// 		Cart.create({
+
+// 			trackName: songId,
+// 			price: price,
+// 			totalPrice: totalPrice,
+// 			orderActive: true
+// 		})
+// 			.then((res) => {
+// 			return Cart.updateOne(req.body.cart)
+// 			})
+// 			.catch(err => console.log(err))
+// })
+
+
+
 
 module.exports = router
