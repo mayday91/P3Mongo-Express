@@ -13,8 +13,9 @@ const cartSchema = new Schema({
   },
   // owner
   owner: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    require: true
   },
   totalPrice: {
     type: Number
@@ -30,4 +31,4 @@ const cartSchema = new Schema({
 })
 
 
-module.exports = model('Cart', cartSchema)
+module.exports = mongoose.model('Cart', cartSchema)
