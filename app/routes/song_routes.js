@@ -34,7 +34,8 @@ const requireOwnership = customErrors.requireOwnership
 // this is middleware that will remove blank fields from `req.body`, e.g.
 // { example: { title: '', text: 'foo' } } -> { example: { text: 'foo' } }
 const removeBlanks = require('../../lib/remove_blank_fields')
-const cart = require('../models/cart')
+
+
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
 // it will also set `req.user`
@@ -72,34 +73,38 @@ router.get("/songs/:searchTerm", (req, res, next) => {
 })
 
 
-// CREATE A CART ROUTE
-// CREATE A CART FOR THE USER WHEN THEY LOGGED IN
-// requireToken
-router.post("/carts", requireToken, (req, res, next) => {
-	// create a const for id first?
-    req.body.owner = req.user.Id
+// // CREATE A CART ROUTE
+// // CREATE A CART FOR THE USER WHEN THEY LOGGED IN
+// // requireToken
+// router.post("/carts", requireToken, (req, res, next) => {
+// 	// create a const for id first?
+//     req.body.owner = req.user.id
 
-    Cart.create(req.body)
-        .then(cart => {
-            console.log(cart)
-			res.status(201).json({cart})
+//     Cart.create(req.body)
+//         .then(cart => {
+//             console.log(cart)
+// 			res.status(201).json({cart})
             
-        })
-        .catch(err => {
-            res.json(err)
-        })
-})
+//         })
+//         .catch(err => {
+//             res.json(err)
+//         })
+// })
 
 
 // // UPDATE ADD/REMOVE SONG FROM CART
 // // FULL CRUD WILL BE CARRIED OUT HERE
-// router.patch("/cart/:id", requireToken, removeBlanks, (req, res, next) => {
+// // REQUIRETOKEN
+// router.patch("/carts/:id", requireToken, removeBlanks, (req, res, next) => {
 // 	delete req.body.cart.owner
 
 // 	Cart.findById(req.params.id)
+// 	// console.log("Yo, this req", req)
 // 		//hanlde 404 errors
 // 		.then(handle404)
 // 		.then((cart) => {
+// 			console.log('this is cart', cart)
+// 			console.log("this is req", req.body)
 // 			// require ownership of the cart before updating
 // 			requireOwnership(req, cart)
 // 			// pass along the update to the next .then
@@ -109,6 +114,7 @@ router.post("/carts", requireToken, (req, res, next) => {
 // 		.then(() => res.sendStatus(204))
 // 		.catch(next)
 // })
+
 
 
 // // DELETE CART ROUTE
