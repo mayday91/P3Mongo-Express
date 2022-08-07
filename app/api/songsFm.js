@@ -5,7 +5,7 @@ const axios = require('axios')
 const getLastFmSong = (searchTerm, apiKey) => {
 	return axios({
 		method: "GET",
-		url: `https://ws.audioscrobbler.com/2.0/?method=track.search&track=${searchTerm}&api_key=${apiKey}&format=json&limit=30`,
+		url: `https://ws.audioscrobbler.com/2.0/?method=album.search&album=${searchTerm}&api_key=${apiKey}&format=json&limit=30`,
 		// data: {}
 		})
 }
