@@ -46,6 +46,7 @@ const router = express.Router()
 
 
 
+
 // SINGLE SONG SEARCH
 // Q for a related title
 // if we want our searchTerm to come from body, we must do a few things
@@ -72,112 +73,6 @@ router.get("/songs/:searchTerm", (req, res, next) => {
 			.catch(err => console.log(err))
 })
 
-
-// // CREATE A CART ROUTE
-// // CREATE A CART FOR THE USER WHEN THEY LOGGED IN
-// // requireToken
-// router.post("/carts", requireToken, (req, res, next) => {
-// 	// create a const for id first?
-//     req.body.owner = req.user.id
-
-//     Cart.create(req.body)
-//         .then(cart => {
-//             console.log(cart)
-// 			res.status(201).json({cart})
-            
-//         })
-//         .catch(err => {
-//             res.json(err)
-//         })
-// })
-
-
-// // UPDATE ADD/REMOVE SONG FROM CART
-// // FULL CRUD WILL BE CARRIED OUT HERE
-// // REQUIRETOKEN
-// router.patch("/carts/:id", requireToken, removeBlanks, (req, res, next) => {
-// 	delete req.body.cart.owner
-
-// 	Cart.findById(req.params.id)
-// 	// console.log("Yo, this req", req)
-// 		//hanlde 404 errors
-// 		.then(handle404)
-// 		.then((cart) => {
-// 			console.log('this is cart', cart)
-// 			console.log("this is req", req.body)
-// 			// require ownership of the cart before updating
-// 			requireOwnership(req, cart)
-// 			// pass along the update to the next .then
-// 			return cart.updateOne(req.body.cart)
-// 		})
-// 		// no content, but successful update
-// 		.then(() => res.sendStatus(204))
-// 		.catch(next)
-// })
-
-
-
-// // DELETE CART ROUTE
-// router.delete("/carts/:id", requireToken, (req, res, next) => {
-
-// 	Cart.findById(req.params.id)
-// 	// handle 404
-// 	.then(handle404)
-// 	.then((cart) => {
-// 		requireOwnership(req, res)
-// 		cart.deleteOne()
-// 	})
-// 	// send status since this will be no content
-// 	.then(() => res.sendStatus(204))
-// 	.catch(next)
-// })
-
-
-
-
-
-// SHOW CART ROUTE?
-
-
-
-
-
-// // ADD TO CART ROUTE
-// // 
-// router.post("/addToCart", (req, res, next) => {
-// 	const user = req.data.user.id
-// 	const songId = req.data.mbid
-// 	const price = 1
-// 	const total = 1
-// 	const totalPrice = price * total
-// 	orderActive = true
-// 	if (Cart.find(user) === "") {
-// 		Cart.create({
-
-// 			trackName: songId,
-// 			price: price,
-// 			totalPrice: totalPrice,
-// 			orderActive: true
-// 		})
-// 	} else (Cart.find({
-
-// 		trackName: songId,
-// 		price: price,
-// 		totalPrice: totalPrice,
-// 		orderActive: true
-// 	}))
-// 		Cart.create({
-
-// 			trackName: songId,
-// 			price: price,
-// 			totalPrice: totalPrice,
-// 			orderActive: true
-// 		})
-// 			.then((res) => {
-// 			return Cart.updateOne(req.body.cart)
-// 			})
-// 			.catch(err => console.log(err))
-// })
 
 
 

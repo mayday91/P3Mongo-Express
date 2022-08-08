@@ -6,6 +6,9 @@ const passport = require('passport')
 // bcrypt docs: https://github.com/kelektiv/node.bcrypt.js
 const bcrypt = require('bcrypt')
 
+
+const Cart = require("../models/cart")
+
 // see above for explanation of "salting", 10 rounds is recommended
 const bcryptSaltRounds = 10
 
@@ -16,6 +19,7 @@ const BadParamsError = errors.BadParamsError
 const BadCredentialsError = errors.BadCredentialsError
 
 const User = require('../models/user')
+const cart = require('../models/cart')
 
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
@@ -52,6 +56,11 @@ router.post('/sign-up', (req, res, next) => {
 		})
 		// create user with provided email and hashed password
 		.then((user) => User.create(user))
+		.then((user) => {
+			newUser = user 
+			Cart.create({"owner": user})
+		})
+
 		// send the new user object back with status 201, but `hashedPassword`
 		// won't be send because of the `transform` in the User model
 		.then((user) => res.status(201).json({ user: user.toObject() }))
