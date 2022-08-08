@@ -60,38 +60,48 @@ router.post("/carts", requireToken, (req, res, next) => {
 			res.status(201).json({cart})
             
         })
-        .catch(err => {
-            res.json(err)
-        })
+        .catch(next)
 })
 
 
-// // INDEX
-// // GET /carts
-// router.get("/carts", (req, res, next) => {
+// INDEX
+// GET /carts
+router.get("/carts", (req, res, next) => {
 
-//     Cart.find()
-//         .populate("owner")
-//         .then((carts) => {
-//         return carts.map((cart) => cart.toObject())
-//     })
-//     .then((carts) => res.status(200).json({carts: carts}))
-//     .catch(err => {
-//         res.json(err)
-//     })
-// })
+    Cart.find()
+        .populate("owner")
+        .then((carts) => {
+        return carts.map((cart) => cart.toObject())
+    })
+    .then((carts) => res.status(200).json({carts: carts}))
+    .catch(err => {
+        res.json(err)
+    })
+})
+
 
 // SHOW
 //GET /carts/:id
-router.get("/carts/:id", (req, res, next) => {
+// SHOW
+//GET /carts/:id
 
-    Cart.findById(req.params.id)
-        .populate("owner")
-        .then(handle404)
-        .then((cart) => res.status(200).json({ cart: cart.toObject()}))
-        .catch(err => {
-            res.json(err)
-        })
+// WORKING WITH HAYK
+// USER ID
+router.get("/carts/:id", (req, res, next) => {
+	console.log('req.param!!!',req.params);
+
+    Cart.find({ owner : req.params.id})
+        .populate("owner") // brings the whole user info in
+		.exec(function(error,cart){
+			console.log('CART',cart)
+			if(error){
+				res.send(error)
+			} else { 
+				res.status(200).json({ cart })
+			}			
+			})
+		
+
 })
 
 
@@ -99,14 +109,29 @@ router.get("/carts/:id", (req, res, next) => {
 // UPDATE ADD/REMOVE SONG FROM CART
 // FULL CRUD WILL BE CARRIED OUT HERE
 // REQUIRETOKEN
-router.patch("/carts/:id", requireToken, removeBlanks, (req, res, next) => {
-	delete req.body.cart.owner
+// UPDATED WITH HAYK
 
-	Cart.findById(req.params.id)
-	// console.log("Yo, this req", req)
+// WORKING
+router.patch("/carts/:id", requireToken,removeBlanks, (req, res, next) => {
+	// delete req.body.cart.owner
+	console.log('HIT .THEN IN PATCH~~~~~~~');
+	console.log('req.body***********',req.body.songIdToAdd);		
+
+	// NEEDS WORK
+	// Needs to be changed to album
+	let songIn = { 
+				 songName : req.body.songIdToAdd.name,
+				 songArtist : req.body.songIdToAdd.artist,
+				 songImages : req.body.songIdToAdd.image[3]['#text']}	
+
+	// let songIn = { songs : "testSongtoAdd"}
+	// console.log(songIn);
+
+	Cart.findOneAndUpdate({ owner : req.user.id},{ $push: { songs: songIn}})
 		//hanlde 404 errors
 		.then(handle404)
 		.then((cart) => {
+			
 			console.log('this is cart', cart)
 			console.log("this is req", req.body)
 			// require ownership of the cart before updating
@@ -128,7 +153,7 @@ router.delete("/carts/:id", requireToken, (req, res, next) => {
 	// handle 404
 	.then(handle404)
 	.then((cart) => {
-		requireOwnership(req, res)
+		// requireOwnership(req, cart)
 		cart.deleteOne()
 	})
 	// send status since this will be no content
@@ -136,11 +161,6 @@ router.delete("/carts/:id", requireToken, (req, res, next) => {
 	.catch(next)
 })
 
-
-
-
-
-// SHOW CART ROUTE?
 
 
 

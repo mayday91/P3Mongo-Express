@@ -5,7 +5,7 @@ const { Schema, model } = mongoose
 const songSchema = require("./song")
 
 const cartSchema = new Schema({
-  songs: [songSchema],
+  songs: Array,
   // we can make songs a subdoc by importing the model schema into this array
   price: {
     type: Number,
